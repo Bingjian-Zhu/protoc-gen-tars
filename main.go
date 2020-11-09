@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"os"
 
-	_ "github.com/TarsCloud/TarsGo/tars/tools/pb2tarsgo/protoc-gen-go/tarsrpc"
+	"github.com/go-tars/protoc-gen-tars/generator"
+	_ "github.com/go-tars/protoc-gen-tars/tars"
 	"github.com/golang/protobuf/proto"
-	"github.com/golang/protobuf/protoc-gen-go/generator"
 )
 
 func main() {

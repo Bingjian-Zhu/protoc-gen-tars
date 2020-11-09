@@ -1,15 +1,48 @@
-# protoc-gen-go
+# protoc-gen-tars
 
 
-## build
-```bash
-go build .
+## Install
 
-cp protoc-gen-go $GOPATH/bin
+```
+go get github.com/go-tars/protoc-gen-tars@master
 ```
 
-## Use
+Also required:
 
-```bash
-protoc --go_out=plugins=tarsrpc:. example.proto
+- protoc
+- protoc-gen-go
+
+## Usage
+
+Define your service as example.proto
+
+```
+syntax = "proto3";
+
+service Greeter {
+	rpc Hello(Request) returns (Response) {}
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+```
+
+Generate the code
+
+```
+protoc --go_out=. --tars_out=. example.proto
+```
+
+Your output result should be:
+
+```
+./
+├── example.pb.go
+├── example.pb.tars.go
+└── example.proto
 ```
