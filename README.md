@@ -9,8 +9,8 @@ go get github.com/go-tars/protoc-gen-tars@master
 
 Also required:
 
-- protoc
-- protoc-gen-go
+- [protoc](https://github.com/google/protobuf)
+- [protoc-gen-go](https://github.com/golang/protobuf)
 
 ## Usage
 
@@ -32,11 +32,16 @@ message Response {
 }
 ```
 
-Generate the code
+Generate the code:
 
-```bash
+```
 protoc --go_out=. --tars_out=. example.proto
-# protoc --gogofaster_out=. --tars_out=. example.proto
+```
+
+Maybe gogofaster is better:
+
+```
+protoc --gogofaster_out=. --tars_out=. example.proto
 ```
 
 Your output result should be:
@@ -48,15 +53,19 @@ Your output result should be:
 └── example.proto
 ```
 
-## Test
+## Example test
 
-```bash
-# server
+server:
+```
 go run example/server/main.go -config example/config.conf
+```
 
-# client
+client:
+```
 go run example/client/main.go -config example/config.conf
+```
 
-# out
+output:
+```
 result is: hellosandyskies
 ```
