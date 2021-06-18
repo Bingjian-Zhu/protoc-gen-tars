@@ -4,7 +4,7 @@
 ## Install
 
 ```
-go get github.com/go-tars/protoc-gen-tars@master
+go get github.com/bingjian-zhu/protoc-gen-tars@master
 ```
 
 Also required:

@@ -1,4 +1,4 @@
-module github.com/go-tars/protoc-gen-tars
+module github.com/bingjian-zhu/protoc-gen-tars
 
 go 1.14
 

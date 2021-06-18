@@ -4,8 +4,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/go-tars/protoc-gen-tars/generator"
-	_ "github.com/go-tars/protoc-gen-tars/tars"
+	"github.com/bingjian-zhu/protoc-gen-tars/generator"
+	_ "github.com/bingjian-zhu/protoc-gen-tars/tars"
 	"github.com/golang/protobuf/proto"
 )
 

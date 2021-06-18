@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TarsCloud/TarsGo/tars"
-	"github.com/go-tars/protoc-gen-tars/example"
+	"github.com/bingjian-zhu/protoc-gen-tars/example"
 )
 
 func main() {

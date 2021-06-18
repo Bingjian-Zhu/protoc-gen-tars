@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/go-tars/protoc-gen-tars/generator"
+	"github.com/bingjian-zhu/protoc-gen-tars/generator"
 	pb "github.com/golang/protobuf/protoc-gen-go/descriptor"
 )
 
@@ -161,7 +161,7 @@ func (t *tars) generateService(file *generator.FileDescriptor, service *pb.Servi
 	//generate the interface
 	t.P(fmt.Sprintf("type imp%s interface{", serviceName))
 	for _, method := range service.Method {
-		t.P(fmt.Sprintf("%s (input %s) (output %s, err error)",
+		t.P(fmt.Sprintf("%s (input *%s) (output *%s, err error)",
 			upperFirstLatter(method.GetName()), t.typeName(method.GetInputType()), t.typeName(method.GetOutputType())))
 	}
 	t.P("}")
@@ -170,7 +170,7 @@ func (t *tars) generateService(file *generator.FileDescriptor, service *pb.Servi
 	//generate the context interface
 	t.P(fmt.Sprintf("type imp%sWithContext interface{", serviceName))
 	for _, method := range service.Method {
-		t.P(fmt.Sprintf("%s (ctx context.Context, input %s) (output %s, err error)",
+		t.P(fmt.Sprintf("%s (ctx context.Context, input *%s) (output *%s, err error)",
 			upperFirstLatter(method.GetName()), t.typeName(method.GetInputType()), t.typeName(method.GetOutputType())))
 	}
 	t.P("}")
@@ -189,16 +189,16 @@ func (t *tars) generateClientCode(service *pb.ServiceDescriptorProto, method *pb
 	inType := t.typeName(method.GetInputType())
 	outType := t.typeName(method.GetOutputType())
 	t.P(fmt.Sprintf(`// %s is client rpc method as defined
-		func (obj *%s) %s(input %s, _opt ...map[string]string)(output %s, err error){
+		func (obj *%s) %s(input *%s, _opt ...map[string]string)(output *%s, err error){
 			ctx := context.Background()
 			return obj.%sWithContext(ctx, input, _opt...)
 		}
 	`, methodName, serviceName, methodName, inType, outType, methodName))
 
 	t.P(fmt.Sprintf(`// %sWithContext is client rpc method as defined
-		func (obj *%s) %sWithContext(ctx context.Context, input %s, _opt ...map[string]string)(output %s, err error){
+		func (obj *%s) %sWithContext(ctx context.Context, input *%s, _opt ...map[string]string)(output *%s, err error){
 			var inputMarshal []byte
-			inputMarshal, err = proto.Marshal(&input)
+			inputMarshal, err = proto.Marshal(input)
 			if err != nil {
 				return output, err
 			}
@@ -218,7 +218,7 @@ func (t *tars) generateClientCode(service *pb.ServiceDescriptorProto, method *pb
 			if err != nil {
 				return output, err
 			}
-			if err = proto.Unmarshal(tools.Int8ToByte(resp.SBuffer), &output); err != nil{
+			if err = proto.Unmarshal(tools.Int8ToByte(resp.SBuffer), output); err != nil{
 				return output, err
 			}
 
@@ -259,11 +259,11 @@ func (t *tars) generateDispatch(service *pb.ServiceDescriptorProto) {
 	`, serviceName))
 	for _, method := range service.Method {
 		t.P(fmt.Sprintf(`case "%s":
-			inputDefine := %s{}
+			inputDefine := &%s{}
 			if err = proto.Unmarshal(input,&inputDefine); err != nil{
 				return err
 			}
-			var res %s
+			var res *%s
             if withContext == false {
 				imp := val.(imp%s)
 				res, err = imp.%s(inputDefine)
@@ -277,7 +277,7 @@ func (t *tars) generateDispatch(service *pb.ServiceDescriptorProto) {
 					return err
 				}
 			}
-			output , err = proto.Marshal(&res)
+			output , err = proto.Marshal(res)
 			if err != nil {
 				return err
 			}
