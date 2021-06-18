@@ -12,6 +12,10 @@ Also required:
 - [protoc](https://github.com/google/protobuf)
 - [protoc-gen-go](https://github.com/golang/protobuf)
 
+```
+go build .
+```
+
 ## Usage
 
 Define your service as example.proto
