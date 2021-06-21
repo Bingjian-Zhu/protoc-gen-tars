@@ -260,7 +260,7 @@ func (t *tars) generateDispatch(service *pb.ServiceDescriptorProto) {
 	for _, method := range service.Method {
 		t.P(fmt.Sprintf(`case "%s":
 			inputDefine := &%s{}
-			if err = proto.Unmarshal(input,&inputDefine); err != nil{
+			if err = proto.Unmarshal(input,inputDefine); err != nil{
 				return err
 			}
 			var res *%s
