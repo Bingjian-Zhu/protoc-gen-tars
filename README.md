@@ -12,6 +12,7 @@ Also required:
 - [protoc](https://github.com/google/protobuf)
 - [protoc-gen-go](https://github.com/golang/protobuf)
 
+注意：protoc-gen-go版本要选v1.3.0
 ```
 go build .
 ```
@@ -45,7 +46,7 @@ protoc --go_out=. --tars_out=. example.proto
 Maybe gogofaster is better:
 
 ```
-protoc --gogofaster_out=. --tars_out=. example.proto
+protoc --go_out=. --pb2tars_out=. example.proto
 ```
 
 Your output result should be:
