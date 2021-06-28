@@ -11,8 +11,9 @@ Also required:
 
 - [protoc](https://github.com/google/protobuf)
 - [protoc-gen-go](https://github.com/golang/protobuf)
-
-注意：protoc-gen-go版本要选v1.3.0
+go get -u github.com/golang/protobuf/proto@v1.3.5
+go get -u github.com/golang/protobuf/protoc-gen-go@v1.3.5
+注意：要选v1.3.5
 ```
 go build .
 ```
